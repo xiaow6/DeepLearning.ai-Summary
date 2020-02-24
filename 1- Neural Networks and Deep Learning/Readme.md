@@ -69,7 +69,16 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### What is a (Neural Network) NN?
 
-- Single neuron == linear regression
+- Single neuron == linear regression without applying activation(perceptron)
+- Basically a single neuron will calculate weighted sum of input(W.T*X) and then we can set a threshold to predict output in a perceptron. If weighted sum of input cross the threshold, perceptron fires and if not then perceptron doesn't predict.
+- Perceptron can take real values input or boolean values.
+- Actually, when w⋅x+b=0 the perceptron outputs 0.
+- Disadvantage of perceptron is that it only output binary values and if we try to give small change in weight and bais then perceptron can flip the output. We need some system which can modify the output slightly according to small change in weight and bias. Here comes sigmoid function in picture.
+- If we change perceptron with a sigmoid function, then we can make slight change in output.
+- e.g. output in perceptron = 0, you slightly changed weight and bias, output becomes = 1 but actual output is 0.7. In case of sigmoid, output1 = 0, slight change in weight and bias, output = 0.7. 
+- If we apply sigmoid activation function then Single neuron will act as Logistic Regression.
+-  we can understand difference between perceptron and sigmoid function by looking at sigmoid function graph.
+
 - Simple NN graph:
   - ![](Images/Others/01.jpg)
   - Image taken from [tutorialspoint.com](http://www.tutorialspoint.com/)
@@ -218,13 +227,13 @@ Here are the course summary as its given on the course [link](https://www.course
 - Lets say we have these variables:
 
   ```
-  	X1					Feature
+  	X1                  Feature
   	X2                  Feature
   	W1                  Weight of the first feature.
   	W2                  Weight of the second feature.
   	B                   Logistic Regression parameter.
   	M                   Number of training examples
-  	Y(i)				Expected output of i
+  	Y(i)                Expected output of i
   ```
 
 - So we have:
@@ -237,7 +246,7 @@ Here are the course summary as its given on the course [link](https://www.course
   	d(z)  = d(l)/d(z) = a - y
   	d(W1) = X1 * d(z)
   	d(W2) = X2 * d(z)
-  	d(B) = d(z)
+  	d(B)  = d(z)
   ```
 
 - From the above we can conclude the logistic regression pseudo code:
@@ -262,9 +271,9 @@ Here are the course summary as its given on the course [link](https://www.course
   	db/= m
 
   	# Gradient descent
-  	w1 = w1 - alpa * dw1
-  	w2 = w2 - alpa * dw2
-  	b = b - alpa * db
+  	w1 = w1 - alpha * dw1
+  	w2 = w2 - alpha * dw2
+  	b = b - alpha * db
   ```
 
 - The above code should run for some iterations to minimize error.
@@ -463,7 +472,7 @@ Here are the course summary as its given on the course [link](https://www.course
 - Derivation of Sigmoid activation function:
 
   ```
-  g(z) = 1 / (1 + np.exp(-z))
+  g(z)  = 1 / (1 + np.exp(-z))
   g'(z) = (1 / (1 + np.exp(-z))) * (1 - (1 / (1 + np.exp(-z))))
   g'(z) = g(z) * (1 - g(z))
   ```
