@@ -7,6 +7,8 @@ This is the first course of the deep learning specialization at [Coursera](https
 * [Neural Networks and Deep Learning](#neural-networks-and-deep-learning)
    * [Table of contents](#table-of-contents)
    * [Course summary](#course-summary)
+   * [Key point](#key-point)
+   * [Welcome](#welcome)
    * [Introduction to deep learning](#introduction-to-deep-learning)
       * [What is a (Neural Network) NN?](#what-is-a-neural-network-nn)
       * [Supervised learning with neural networks](#supervised-learning-with-neural-networks)
@@ -61,7 +63,15 @@ Here are the course summary as its given on the course [link](https://www.course
 >
 > This course also teaches you how Deep Learning actually works, rather than presenting only a cursory or surface-level description. So after completing it, you will be able to apply deep learning to a your own applications. If you are looking for a job in AI, after this course you will also be able to answer basic interview questions.
 
+## Key point
+* Be able to explain how deep learning is applied to supervised learning.
+* Understand what are the major categories of models (such as CNNs and RNNs), and when they should be applied.
+* Be able to recognize the basics of when deep learning will (or will not) work well.
+* Understand the major trends driving the rise of deep learning.
 
+## Welcome
+* Deep learning has already transformed traditional internet businesses like **web search** and **advertising**. But deep learning is also enabling brand new products and businesses and ways of helping people to be created. Everything ranging from **better healthcare**, where deep learning is getting really good at reading X-ray images to delivering **personalized education**, to **precision agriculture**, to even **self driving cars** and many others.
+* AI is the new electricity, it will transform our society rapidly.
 
 ## Introduction to deep learning
 
