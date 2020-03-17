@@ -89,3 +89,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Macbook store 
+*.DS_Store
