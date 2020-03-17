@@ -10,6 +10,7 @@ This is the first course of the deep learning specialization at [Coursera](https
    * [Key point](#key-point)
    * [Welcome](#welcome)
    * [Introduction to deep learning](#introduction-to-deep-learning)
+      * [Deep Learning](#deep-learning)
       * [What is a (Neural Network) NN?](#what-is-a-neural-network-nn)
       * [Supervised learning with neural networks](#supervised-learning-with-neural-networks)
       * [Why is deep learning taking off?](#why-is-deep-learning-taking-off)
@@ -657,13 +658,14 @@ this is the vectorized implementation of forward prop.
 
 - Constant 0.01 is alright for 1 hidden layer networks, but if the NN is deep this number can be changed but it will always be a small number.
 
-### Programming Note
 
 
 
 ## Deep Neural Networks
 
 > Understand the key computations underlying deep learning, use them to build and train deep neural networks, and apply it to computer vision.
+
+To have a better intuition of this week's course, you better go Through the programming exercise more time.
 
 ### Deep L-layer neural network
 
@@ -803,6 +805,7 @@ this is the vectorized implementation of forward prop.
 <br><br>
 <br><br>
 These Notes were original made by [Mahmoud Badry](mailto:mma18@fayoum.edu.eg) @2017
+
 Modified by [Xiao Wang](mailto:shawnwong.ai@gmail.com) @2020
 
 Finally I got the certification for Lecture one.
