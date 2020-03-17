@@ -64,10 +64,36 @@ Here are the course summary as its given on the course [link](https://www.course
 > This course also teaches you how Deep Learning actually works, rather than presenting only a cursory or surface-level description. So after completing it, you will be able to apply deep learning to a your own applications. If you are looking for a job in AI, after this course you will also be able to answer basic interview questions.
 
 ## Key point
+Week 1
 * Be able to explain how deep learning is applied to supervised learning.
 * Understand what are the major categories of models (such as CNNs and RNNs), and when they should be applied.
 * Be able to recognize the basics of when deep learning will (or will not) work well.
 * Understand the major trends driving the rise of deep learning.
+
+Week 2
+* Build a logistic regression model, structured as a shallow neural network
+* Implement the main steps of an ML algorithm, including making predictions, derivative computation, and gradient descent.
+* Implement computationally efficient, highly vectorized, versions of models.
+* Understand how to compute derivatives for logistic regression, using a backpropagation mindset.
+* Become familiar with Python and Numpy
+* Work with iPython Notebooks
+* Be able to implement vectorization across multiple training examples
+
+Week 3
+* Understand hidden units and hidden layers
+* Be able to apply a variety of activation functions in a neural network.
+* Build your first forward and backward propagation with a hidden layer
+* Apply random initialization to your neural network
+* Become fluent with Deep Learning notations and Neural Network Representations
+* Build and train a neural network with one hidden layer.
+
+Week 4
+* See deep neural networks as successive blocks put one after each other
+* Build and train a deep L-layer Neural Network
+* Analyze matrix and vector dimensions to check neural network implementations.
+* Understand how to use a cache to pass information from forward propagation to back propagation.
+* Understand the role of hyperparameters in deep learning
+
 
 ## Welcome
 * Deep learning has already transformed traditional internet businesses like **web search** and **advertising**. But deep learning is also enabling brand new products and businesses and ways of helping people to be created. Everything ranging from **better healthcare**, where deep learning is getting really good at reading X-ray images to delivering **personalized education**, to **precision agriculture**, to even **self driving cars** and many others.
@@ -77,39 +103,38 @@ Here are the course summary as its given on the course [link](https://www.course
 
 > Be able to explain the major trends driving the rise of deep learning, and understand where and how it is applied today.
 
+### Deep Learning
+Refers to training Neural networks.
+
 ### What is a (Neural Network) NN?
 
-- Single neuron == linear regression without applying activation(perceptron)
-- Basically a single neuron will calculate weighted sum of input(W.T*X) and then we can set a threshold to predict output in a perceptron. If weighted sum of input cross the threshold, perceptron fires and if not then perceptron doesn't predict.
-- Perceptron can take real values input or boolean values.
-- Actually, when w⋅x+b=0 the perceptron outputs 0.
-- Disadvantage of perceptron is that it only output binary values and if we try to give small change in weight and bais then perceptron can flip the output. We need some system which can modify the output slightly according to small change in weight and bias. Here comes sigmoid function in picture.
-- If we change perceptron with a sigmoid function, then we can make slight change in output.
-- e.g. output in perceptron = 0, you slightly changed weight and bias, output becomes = 1 but actual output is 0.7. In case of sigmoid, output1 = 0, slight change in weight and bias, output = 0.7. 
-- If we apply sigmoid activation function then Single neuron will act as Logistic Regression.
--  we can understand difference between perceptron and sigmoid function by looking at sigmoid function graph.
-
+- Single neuron == linear regression, house size to house price. 
 - Simple NN graph:
   - ![](Images/Others/01.jpg)
   - Image taken from [tutorialspoint.com](http://www.tutorialspoint.com/)
-- RELU stands for rectified linear unit is the most popular activation function right now that makes deep NNs train faster now.
+- RELU stands for rectified linear unit is the most popular activation function right now that makes deep NNs train faster now. And rectify just means taking a max of 0.
 - Hidden layers predicts connection between inputs automatically, thats what deep learning is good at.
 - Deep NN consists of more hidden layers (Deeper layers)
   - ![](Images/Others/02.png)
   - Image taken from [opennn.net](http://www.opennn.net/)
 - Each Input will be connected to the hidden layer and the NN will decide the connections.
-- Supervised learning means we have the (X,Y) and we need to get the function that maps X to Y.
+- Supervised learning means we have the input and output (X,Y) and we need to get the function that maps X to Y.
 
 ### Supervised learning with neural networks
 
+- So far, almost all the economic value created by neural networks has been through one type of machine learning, called supervised learning.
 - Different types of neural networks for supervised learning which includes:
   - CNN or convolutional neural networks (Useful in computer vision)
   - RNN or Recurrent neural networks (Useful in Speech recognition or NLP)
   - Standard NN (Useful for Structured data)
-  - Hybrid/custom NN or a Collection of NNs types
+  - Hybrid/custom NN or a Collection of NNs for complicated application like autonomous driving.
 - Structured data is like the databases and tables.
 - Unstructured data is like images, video, audio, and text.
-- Structured data gives more money because companies relies on prediction on its big data.
+- Structured data gives more money because companies relies on prediction on its big data.But human race is good at understanding unstructured data.
+- Image of CNN, RNN, and standard NN.
+- ![](Images/standardnn.png)
+- ![](Images/CNN.png)
+ ![](Images/RNN.png)
 
 ### Why is deep learning taking off?
 
@@ -121,8 +146,8 @@ Here are the course summary as its given on the course [link](https://www.course
      - For big data a small NN is better that SVM
      - For big data a big NN is better that a medium NN is better that small NN.
      - Hopefully we have a lot of data because the world is using the computer a little bit more
-       - Mobiles
-       - IOT (Internet of things)
+       -- Mobiles and cameras
+       -- IOT (Internet of things)
   2. Computation:
      - GPUs.
      - Powerful CPUs.
@@ -131,6 +156,7 @@ Here are the course summary as its given on the course [link](https://www.course
   3. Algorithm:
      1. Creative algorithms has appeared that changed the way NN works.
         - For example using RELU function is so much better than using SIGMOID function in training a NN because it helps with the vanishing gradient problem.
+- The faster algorithm and better hardware make the entire Deep learning community grow faster as you can have an experimental result from your idea and code in a shorter time.
 
   ​
 
@@ -140,7 +166,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Binary classification
 
-- Mainly he is talking about how to do a logistic regression to make a binary classifier.
+- Mainly he is talking about how to do a logistic regression to make a binary classifier. Logistic regression is an algorithm for binary classification.
   - ![log](Images/Others/03.png)
   - Image taken from [3.bp.blogspot.com](http://3.bp.blogspot.com)
 - He talked about an example of knowing if the current image contains a cat or not.
@@ -152,31 +178,42 @@ Here are the course summary as its given on the course [link](https://www.course
   - `Y(1) is the first output vector`
   - `X = [x(1) x(2).. x(M)]`
   - `Y = (y(1) y(2).. y(M))`
+  - `X.shape = (Nx, M)`
+  - `Y.shape = (1, M)`
 - We will use python in this course.
 - In NumPy we can make matrices and make operations on them in a fast and reliable time.
 
 ### Logistic regression
 
 - Algorithm is used for classification algorithm of 2 classes.
+- Y_hat is your estimation of Y, it's  the probability of the chance that Y is equal to one given the input features X.
 - Equations:
-  - Simple equation:	`y = wx + b`
-  - If x is a vector: `y = w(transpose)x + b`
-  - If we need y to be in between 0 and 1 (probability): `y = sigmoid(w(transpose)x + b)`
+  - Simple equation, linear regression:	`y = wx + b`
+  - If x is a vector: `y = w(transpose)x + b`,but this is not a good algorithm, because the output is not between 0 and 1.
+  - If we need y to be in between 0 and 1 (probability), logistic regression : `y = sigmoid(w(transpose)x + b)`
   - In some notations this might be used: `y = sigmoid(w(transpose)x)`
     - While `b` is `w0` of `w` and we add `x0 = 1`. but we won't use this notation in the course (Andrew said that the first notation is better).
+
+- Image of Sigmoid function.
+![log](Images/sigmoid.png)
+- Definition of sigmoid function. 
+![log](Images/sigmoid2.png)
 - In binary classification `Y` has to be between `0` and `1`.
 - In the last equation `w` is a vector of `Nx` and `b` is a real number
 
 ### Logistic regression cost function
 
+- Cost function is used to train the parameter W and B.
 - First loss function would be the square root error:  `L(y',y) = 1/2 (y' - y)^2`
-  - But we won't use this notation because it leads us to optimization problem which is non convex, means it contains local optimum points.
-- This is the function that we will use: `L(y',y) = - (y*log(y') + (1-y)*log(1-y'))`
+  - But we won't use this notation because it leads us to optimization problem which is non convex, means it contains  multiple local optimum points.
+- This is the loss function that we will use: `L(y',y) = - (y*log(y') + (1-y)*log(1-y'))`
 - To explain the last function lets see:
-  - if `y = 1` ==> `L(y',1) = -log(y')`  ==> we want `y'` to be the largest   ==> `y`' biggest value is 1
-  - if `y = 0` ==> `L(y',0) = -log(1-y')` ==> we want `1-y'` to be the largest ==> `y'` to be smaller as possible because it can only has 1 value.
-- Then the Cost function will be: `J(w,b) = (1/m) * Sum(L(y'[i],y[i]))`
+  - if `y = 1` ==> `L(y',1) = -log(y')`  ==> we want the loss function is smallest ==> we want `y'` to be the largest   ==> `y`' biggest value is 1
+  - if `y = 0` ==> `L(y',0) = -log(1-y')` ==> we want the loss function is smallest ==> we want `1-y'` to be the largest ==> `y'` can only be as close to 0 as possible.
+- Then the Cost function will be: `J(w,b) = (1/m) * Sum(L(y'[i],y[i]))` = `- (1/m) * Sum(y(i)*log(y'(i)) + (1-y(i))*log(1-y'(i)))`
 - The loss function computes the error for a single training example; the cost function is the average of the loss functions of the entire training set.
+- Watch the [optional course](https://www.coursera.org/learn/neural-networks-deep-learning/lecture/SmIbQ/explanation-of-logistic-regression-cost-function-optional) to figure out why we choose this loss function and cost function. 
+- The quiz: we generally say that the output of a neuron is a = g(Wx + b) where g is the activation function (sigmoid, tanh, ReLU, ...).
 
 ### Gradient Descent
 
@@ -214,7 +251,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Computation graph
 
-- Its a graph that organizes the computation from left to right.
+- It's a graph that organizes the computation from left to right.
   - ![](Images/02.png)
 
 ### Derivatives with a Computation Graph
@@ -231,19 +268,26 @@ Here are the course summary as its given on the course [link](https://www.course
 
 - In the video he discussed the derivatives of gradient decent example for one sample with two features `x1` and `x2`.
   - ![](Images/04.png)
+- The final step in that computation is to go back to compute how much you need to change W and B, 
+- `W = W - alpha * dW`
+- `B = B - alpha * dB`
+- To compute dZ，the key point is to compute the derivative of Sigmoid function.  `If g(x) = 1 / f(x), g'(x) = - f'(x) / (square(f(x))) `, the derivative of sigmoid function is `a * (1 - a)`
+- `dW = X*dz`
+- `dB = dz`
+- Check the vectorized implementation for dw,db.
 
 ### Gradient Descent on m Examples
 
 - Lets say we have these variables:
 
   ```
-  	X1                  Feature
+  	X1					Feature
   	X2                  Feature
   	W1                  Weight of the first feature.
   	W2                  Weight of the second feature.
   	B                   Logistic Regression parameter.
   	M                   Number of training examples
-  	Y(i)                Expected output of i
+  	Y(i)				Expected output of i
   ```
 
 - So we have:
@@ -256,7 +300,7 @@ Here are the course summary as its given on the course [link](https://www.course
   	d(z)  = d(l)/d(z) = a - y
   	d(W1) = X1 * d(z)
   	d(W2) = X2 * d(z)
-  	d(B)  = d(z)
+  	d(B) = d(z)
   ```
 
 - From the above we can conclude the logistic regression pseudo code:
@@ -281,9 +325,9 @@ Here are the course summary as its given on the course [link](https://www.course
   	db/= m
 
   	# Gradient descent
-  	w1 = w1 - alpha * dw1
-  	w2 = w2 - alpha * dw2
-  	b = b - alpha * db
+  	w1 = w1 - alpa * dw1
+  	w2 = w2 - alpa * dw2
+  	b = b - alpa * db
   ```
 
 - The above code should run for some iterations to minimize error.
@@ -296,24 +340,30 @@ Here are the course summary as its given on the course [link](https://www.course
 
 - Deep learning shines when the dataset are big. However for loops will make you wait a lot for a result. Thats why we need vectorization to get rid of some of our for loops.
 - NumPy library (dot) function is using vectorization by default.
-- The vectorization can be done on CPU or GPU thought the SIMD operation. But its faster on GPU.
+- The vectorization can be done on CPU or GPU thought the SIMD（single instruction multiple data） operation. But it‘s faster on GPU.
 - Whenever possible avoid for loops.
 - Most of the NumPy library methods are vectorized version.
+- Introduced some functions in Numpy.
 
 ### Vectorizing Logistic Regression
 
 - We will implement Logistic Regression using one for loop then without any for loop.
-- As an input we have a matrix `X` and its `[Nx, m]` and a matrix `Y` and its `[Ny, m]`.
+- As an input we have a matrix `X` and it's `[Nx, m]` and a matrix `Y` and it's `[Ny, m]`.
 - We will then compute at instance `[z1,z2...zm] = W' * X + [b,b,...b]`. This can be written in python as:
 
-    		Z = np.dot(W.T,X) + b    # Vectorization, then broadcasting, Z shape is (1, m)
-    		A = 1 / 1 + np.exp(-Z)   # Vectorization, A shape is (1, m)
-
+    		Z = np.dot(W.T,X) + b    # Vectorization, then broadcasting b, Z shape is (1, m)
+    		A = 1 / (1 + np.exp(-Z))   # Vectorization, A shape is (1, m)
+this is the vectorized implementation of forward prop.
 - Vectorizing Logistic Regression's Gradient Output:
 
    			dz = A - Y                  # Vectorization, dz shape is (1, m)
    			dw = np.dot(X, dz.T) / m    # Vectorization, dw shape is (Nx, 1)
-   			db = dz.sum() / m           # Vectorization, dz shape is (1, 1)
+   			db = np.sum(dz) / m           # Vectorization, dz shape is (1, 1)
+- update w and b with:
+
+           w := w - alpha * dw
+           b := b - alpha * db
+- But this is just one iteration, you still need one for loop for certain iteration times to finish Implementing Logistic Regression. 
 
 ### Notes on Python and NumPy
 
@@ -325,6 +375,7 @@ Here are the course summary as its given on the course [link](https://www.course
 - Some tricks to eliminate all the strange bugs in the code:
   - If you didn't specify the shape of a vector, it will take a shape of `(m,)` and the transpose operation won't work. You have to reshape it to `(m, 1)`
   - Try to not use the rank one matrix in ANN
+  - Rank one matrix doesn't behave consistently as either a row vector nor a column vector, which makes some of its effects nonintuitive.
   - Don't hesitate to use `assert(a.shape == (5,1))` to check if your matrix shape is the required one.
   - If you've found a rank one matrix try to run reshape on it.
 - Jupyter / IPython notebooks are so useful library in python that makes it easy to integrate code and document at the same time. It runs in the browser and doesn't need an IDE to run.
@@ -341,11 +392,30 @@ Here are the course summary as its given on the course [link](https://www.course
   ```
   v = image.reshape(image.shape[0]*image.shape[1]*image.shape[2],1)  #reshapes the image.
   ```
+  Introduced np.shape and np.reshape() in the programming exercise. 
 
-- Gradient descent converges faster after normalization of the input matrices.
-
+- Gradient descent converges faster after normalization of the input matrices.In the exercise we use 
+  ```
+  np.linalg.norm(x, axis = 1, keepdims = True)
+  ```
+- axis = 1 means sum all elements in row
+```
+  np.sum(x_exp, axis = 1, keepdims = True)
+  ```
+- A trick when you want to flatten a matrix X of shape (a, b, c, d) to a matrix X_flatten of shape (b * c * d, a) is to use:
+  ```
+  X_flatten = X.reshape(X.shape[0], -1).T
+  ```
+- One common preprocessing step in machine learning is to center and standardize your dataset, meaning that you substract the mean of the whole numpy array from each example, and then divide each example by the standard deviation of the whole numpy array. But for picture datasets, it is simpler and more convenient and works almost as well to just divide every row of the dataset by 255 (the maximum value of a pixel channel).
+- Common steps for pre-processing a new dataset are:
+   - Figure out the dimensions and shapes of the problem (m_train, m_test, num_px, ...)
+   - Reshape the datasets such that each example is now a vector of size (num_px * num_px * 3, 1)
+   - "Standardize" the data
+  
 ### General Notes
 
+- np.dot(a,b) is matrix product, a shape is (m, n), b shape is (n, p), result shape is (m, p)
+- a * b is element wise product. a , b and result have the same shape. 
 - The main steps for building a Neural Network are:
   - Define the model structure (such as number of input features and outputs)
   - Initialize the model's parameters.
@@ -355,6 +425,12 @@ Here are the course summary as its given on the course [link](https://www.course
     - Update parameters (gradient descent)
 - Preprocessing the dataset is important.
 - Tuning the learning rate (which is an example of a "hyperparameter") can make a big difference to the algorithm.
+- Different learning rates give different costs and thus different predictions results.
+- If the learning rate is too large (0.01), the cost may oscillate up and down. It may even diverge (though in this example, using 0.01 still eventually ends up at a good value for the cost). 
+- A lower cost doesn't mean a better model. You have to check if there is possibly overfitting. It happens when the training accuracy is a lot higher than the test accuracy.
+- In deep learning, we usually recommend that you: 
+    - Choose the learning rate that better minimizes the cost function.
+    - If your model overfits, use other techniques to reduce overfitting. (We'll talk about this in later videos.) 
 - [kaggle.com](kaggle.com) is a good place for datasets and competitions.
 - [Pieter Abbeel](https://www2.eecs.berkeley.edu/Faculty/Homepages/abbeel.html) is one of the best in deep reinforcement learning.
 
@@ -383,14 +459,16 @@ Here are the course summary as its given on the course [link](https://www.course
 
 
 - `X` is the input vector `(X1, X2, X3)`, and `Y` is the output variable `(1x1)`
-- NN is stack of logistic regression objects.
+- A simple NN is stack of logistic regression objects.
+- [1] first layer
+- [2] second layer
 
 ### Neural Network Representation
 
 - We will define the neural networks that has one hidden layer.
 - NN contains of input layers, hidden layers, output layers.
 - Hidden layer means we cant see that layers in the training set.
-- `a0 = x` (the input layer)
+- `a0 = x` (the input layer) "a" represents the activation function.
 - `a1` will represent the activation of the hidden neurons.
 - `a2` will represent the output layer.
 - We are talking about 2 layers NN. The input layer isn't counted.
@@ -411,9 +489,11 @@ Here are the course summary as its given on the course [link](https://www.course
     - `b2` is the matrix of the second hidden layer, it has a shape of `(1,1)`
     - `z2` is the result of the equation `z2 = W2*a1 + b`, it has a shape of `(1,1)`
     - `a2` is the result of the equation `a2 = sigmoid(z2)`, it has a shape of `(1,1)`
+- What the notation in NN means:
+  ![](Images/notations.png)
 
 ### Vectorizing across multiple examples
-
+- Check the slides for what round bracket and square bracket mean.
 - Pseudo code for forward propagation for the 2 layers NN:
 
   ```
@@ -455,11 +535,11 @@ Here are the course summary as its given on the course [link](https://www.course
 
     Or
     `A = np.tanh(z)   # Where z is the input matrix`
-- It turns out that the tanh activation usually works better than sigmoid activation function for hidden units because the mean of its output is closer to zero, and so it centers the data better for the next layer.
+- It turns out that the tanh activation usually works better than sigmoid activation function for hidden units because the mean of its output is closer to zero rather than 0.5, and so it centers the data better for the next layer. Sigmoid function is better for output layer because for binary classification, the result is 0 or 1.
 - Sigmoid or Tanh function disadvantage is that if the input is too small or too high, the slope will be near zero which will cause us the gradient decent problem.
-- One of the popular activation functions that solved the slow gradient decent is the RELU function.
+- One of the popular activation functions that solved the slow gradient decent is the RELU(rectified linear unit) function.
   `RELU = max(0,z) # so if z is negative the slope is 0 and if z is positive the slope remains linear.`
-- So here is some basic rule for choosing activation functions, if your classification is between 0 and 1, use the output activation as sigmoid and the others as RELU.
+- So here is some basic rule for choosing activation functions, if your classification is between 0 and 1, use the output activation as sigmoid(or not, never use it for other layers because tanh is superior) and the others as RELU.
 - Leaky RELU activation function different of RELU is that if the input is negative the slope will be so small. It works as RELU but most people uses RELU.
   `Leaky_RELU = max(0.01z,z)  #the 0.01 can be a parameter for your algorithm.`
 - In NN you will decide a lot of choices like:
@@ -468,13 +548,14 @@ Here are the course summary as its given on the course [link](https://www.course
   - Learning rate.       (The most important parameter)
   - Activation functions.
   - And others..
-- It turns out there are no guide lines for that. You should try all activation functions for example.
+- It turns out there are no guide lines for that. You should try all choices for example.
 
 ### Why do you need non-linear activation functions?
 
-- If we removed the activation function from our algorithm that can be called linear activation function.
+- If we removed the activation function from our algorithm that can be called linear（identity） activation function.
 - Linear activation function will output linear activations
   - Whatever hidden layers you add, the activation will be always linear like logistic regression (So its useless in a lot of complex problems)
+  - n linear activation function equal to one linear activation function.
 - You might use linear activation function in one place - in the output layer if the output is real numbers (regression problem). But even in this case if the output value is non-negative you could use RELU instead.
 
 ### Derivatives of activation functions
@@ -482,7 +563,7 @@ Here are the course summary as its given on the course [link](https://www.course
 - Derivation of Sigmoid activation function:
 
   ```
-  g(z)  = 1 / (1 + np.exp(-z))
+  g(z) = 1 / (1 + np.exp(-z))
   g'(z) = (1 / (1 + np.exp(-z))) * (1 - (1 / (1 + np.exp(-z))))
   g'(z) = g(z) * (1 - g(z))
   ```
@@ -552,6 +633,7 @@ Here are the course summary as its given on the course [link](https://www.course
   dW1 = (dZ1 * A0.T) / m   # A0 = X
   db1 = Sum(dZ1) / m
   # Hint there are transposes with multiplication because to keep dimensions correct
+  # The np.sum is a Python NumPy command for summing across one-dimension of a matrix. In this case axis = 1, summing horizontally, and what keepdims = True does is, it prevents Python from outputting one of those funny rank one arrays
   ```
 - How we derived the 6 equations of the backpropagation:   
   ![](Images/06.png)
@@ -575,21 +657,26 @@ Here are the course summary as its given on the course [link](https://www.course
 
 - Constant 0.01 is alright for 1 hidden layer networks, but if the NN is deep this number can be changed but it will always be a small number.
 
+### Programming Note
+
+
+
 ## Deep Neural Networks
 
 > Understand the key computations underlying deep learning, use them to build and train deep neural networks, and apply it to computer vision.
 
 ### Deep L-layer neural network
 
-- Shallow NN is a NN with one or two layers.
-- Deep NN is a NN with three or more layers.
+- Shallow NN versus depth NN is a matter of degree.
+- on the machine learning community, has realized that there are functions that very deep neural networks can learn that shallower models are often unable to. 
+- Although for any given problem, it might be hard to predict in advance exactly how deep in your network you would want. So it would be reasonable to try logistic regression, and treat the depth as a hyperparameter.
 - We will use the notation `L` to denote the number of layers in a NN.
 - `n[l]` is the number of neurons in a specific layer `l`.
 - `n[0]` denotes the number of neurons input layer. `n[L]` denotes the number of neurons in output layer.
-- `g[l]` is the activation function.
+- `g[l]` is the layer l activation function.
 - `a[l] = g[l](z[l])`
 - `w[l]` weights is used for `z[l]`
-- `x = a[0]`, `a[l] = y'`
+- `x = a[0]`, `a[l] = y_hat`
 - These were the notation we will use for deep neural network.
 - So we have:
   - A vector `n` of shape `(1, NoOfLayers+1)`
@@ -614,26 +701,27 @@ Here are the course summary as its given on the course [link](https://www.course
   ```
 
 - We can't compute the whole layers forward propagation without a for loop so its OK to have a for loop here.
-- The dimensions of the matrices are so important you need to figure it out.
+- The dimensions of the matrices are so important you need to figure it out so that you can write bug free code.
 
 ### Getting your matrix dimensions right
 
 - The best way to debug your matrices dimensions is by a pencil and paper.
-- Dimension of `W` is `(n[l],n[l-1])` . Can be thought by right to left.
-- Dimension of `b` is `(n[l],1)`
+- Dimension of `W[l]` is `(n[l],n[l-1])` . Can be thought by right to left.
+- Dimension of `b[l]` is `(n[l],1)`. Can be thought by row same as W1, but only one column.
 - `dw` has the same shape as `W`, while `db` is the same shape as `b`
-- Dimension of `Z[l],` `A[l]`, `dZ[l]`, and `dA[l]`  is `(n[l],m)`
+- For a single neuron, dimension of `z[l]`, `a[l]` , `dz[l]`, and `da[l]` is `(n[l], 1)`.
+- In vectorized implementation, dimension of `Z[l]`, `A[l]`, `dZ[l]`, and `dA[l]`  is `(n[l],m)`.
 
 ### Why deep representations?
 
-- Why deep NN works well, we will discuss this question in this section.
+- Why deep NN works well, we will discuss this question in this section by introducing face recognizion.
 - Deep NN makes relations with data from simpler to complex. In each layer it tries to make a relation with the previous layer. E.g.:
   - 1) Face recognition application:
       - Image ==> Edges ==> Face parts ==> Faces ==> desired face
   - 2) Audio recognition application:
       - Audio ==> Low level sound features like (sss,bb) ==> Phonemes ==> Words ==> Sentences
 - Neural Researchers think that deep neural networks "think" like brains (simple ==> complex)
-- Circuit theory and deep learning:
+- Another intuition why deep NN works better is Circuit theory and deep learning: the difference is O(logn) and O($2^n$)
   - ![](Images/07.png)
 - When starting on an application don't start directly by dozens of hidden layers. Try the simplest solutions (e.g. Logistic Regression), then try the shallow neural network and so on.
 
@@ -671,7 +759,9 @@ Here are the course summary as its given on the course [link](https://www.course
   ```
   dA[L] = (-(y/a) + ((1-y)/(1-a)))
   ```
+- In Andrew's opinion, sometimes deep learning codes works magically, even you don't have so many lines of codes. That's because the data set is huge and good. 
 
+ 
 ### Parameters vs Hyperparameters
 
 - Main parameters of the NN is `W` and `b`
@@ -680,9 +770,10 @@ Here are the course summary as its given on the course [link](https://www.course
   - Number of iteration.
   - Number of hidden layers `L`.
   - Number of hidden units `n`.
-  - Choice of activation functions.
-- You have to try values yourself of hyper parameters.
+  - Choice of activation functions, but a[l] is not.
+- You have to try values yourself of hyper parameters because you don't know in advance which hyperparameter works better.
 - In the earlier days of DL and ML learning rate was often called a parameter, but it really is (and now everybody call it) a hyperparameter.
+- For computer vision, NLP, ad recommendation or other applications, you can't just use one set of hyperparameters for all applications, you have to try a range of hyperparameters. This is a disappointing aspect of deep learning. And over months, you should try to find better hyperparameters for your algorithm because the dataset, CPU, GPU may change, your best hyperparameter at that time may not still be the best choice.
 - On the next course we will see how to optimize hyperparameters.
 
 ### What does this have to do with the brain
@@ -711,4 +802,8 @@ Here are the course summary as its given on the course [link](https://www.course
 
 <br><br>
 <br><br>
-These Notes were made by [Mahmoud Badry](mailto:mma18@fayoum.edu.eg) @2017
+These Notes were original made by [Mahmoud Badry](mailto:mma18@fayoum.edu.eg) @2017
+Modified by [Xiao Wang](mailto:shawnwong.ai@gmail.com) @2020
+
+Finally I got the certification for Lecture one.
+![](Images/cert1.png)
