@@ -7,6 +7,7 @@ This is the second course of the deep learning specialization at [Coursera](http
 * [Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization](#improving-deep-neural-networks-hyperparameter-tuning-regularization-and-optimization)
    * [Table of contents](#table-of-contents)
    * [Course summary](#course-summary)
+   * [Key point](#key-point)
    * [Practical aspects of Deep Learning](#practical-aspects-of-deep-learning)
       * [Train / Dev / Test sets](#train--dev--test-sets)
       * [Bias / Variance](#bias--variance)
@@ -65,12 +66,32 @@ Here are the course summary as its given on the course [link](https://www.course
 
 
 
+## Key Point
+Week 1
+* Recall that different types of initializations lead to different results
+* Recognize the importance of initialization in complex neural networks.
+* Recognize the difference between train/dev/test sets
+* Diagnose the bias and variance issues in your model
+* Learn when and how to use regularization methods such as dropout or L2 regularization.
+* Understand experimental issues in deep learning such as Vanishing or Exploding gradients and learn how to deal with them
+* Use gradient checking to verify the correctness of your backpropagation implementation
+
+Week 2
+* Remember different optimization methods such as (Stochastic) Gradient Descent, Momentum, RMSProp and Adam
+* Use random minibatches to accelerate the convergence and improve the optimization
+* Know the benefits of learning rate decay and apply it to your optimization
+
+Week 3
+* Master the process of hyperparameter tuning
+
+
 ## Practical aspects of Deep Learning
 
 ### Train / Dev / Test sets
 
-- Its impossible to get all your hyperparameters right on a new application from the first time.
-- So the idea is you go through the loop: `Idea ==> Code ==> Experiment`.
+- Making good choices in how you set up your training, development, and test sets can make a huge difference in helping you quickly find a good high performance neural network.
+- It's impossible to get all your hyperparameters right on a new application from the first time.
+- So the idea is you go through the loop: `Idea ==> Code ==> Experiment`.So one of the things that determine how quickly you can make progress is how efficiently you can go around this cycle. 
 - You have to go through the loop many times to figure out your hyperparameters.
 - Your data will be split into three parts:
   - Training set.       (Has to be the largest set)
@@ -84,7 +105,7 @@ Here are the course summary as its given on the course [link](https://www.course
 - Make sure the dev and test set are coming from the same distribution.
   - For example if cat training pictures is from the web and the dev/test pictures are from users cell phone they will mismatch. It is better to make sure that dev and test set are from the same distribution.
 - The dev set rule is to try them on some of the good models you've created.
-- Its OK to only have a dev set without a testing set. But a lot of people in this case call the dev set as the test set. A better terminology is to call it a dev set as its used in the development.
+- Its OK to only have a dev set without a testing set. But a lot of people in this case call the dev set as the test set. A better terminology is to call it a dev set as it's used in the development.
 
 ### Bias / Variance
 
@@ -95,7 +116,7 @@ Here are the course summary as its given on the course [link](https://www.course
   - Your model will be alright if you balance the Bias / Variance
   - For more:
     - ![](Images/01-_Bias_-_Variance.png)
-- Another idea to get the bias /  variance if you don't have a 2D plotting mechanism:
+- Another idea to get the bias /  variance if you don't have a 2D plotting mechanism, the two key numbers to look at to understand bias and variance will be the train set error and the dev set or the development set error.:
   - High variance (overfitting) for example:
     - Training error: 1%
     - Dev error: 11%
@@ -108,39 +129,46 @@ Here are the course summary as its given on the course [link](https://www.course
   - Best:
     - Training error: 0.5%
     - Test error: 1%
-  - These Assumptions came from that human has 0% error. If the problem isn't like that you'll need to use human error as baseline.
+  - All this is under the assumption that the base error is quite small and that your training and your dev sets are drawn from the same distribution. so the optimal error, sometimes called base error is nearly 0%. If the problem isn't like that you'll need to use human error as baseline.
+  - Generally, by looking at your training set error you can get a sense of how well you are fitting, at least the training data, and so that tells you if you have a bias problem. And then looking at how much higher your error goes, when you go from the training set to the dev set, that should give you a sense of how bad is the variance problem.
+  - In deep learning we don't say bias variance trade off because sometimes you have both high variance and high bias, and sometimes you have neither.
 
 ### Basic Recipe for Machine Learning
 
-- If your algorithm has a high bias:
+- If your algorithm has a high bias, look at the training set performance:
   - Try to make your NN bigger (size of hidden units, number of layers)
   - Try a different model that is suitable for your data.
   - Try to run it longer.
   - Different (advanced) optimization algorithms.
-- If your algorithm has a high variance:
-  - More data.
-  - Try regularization.
+
+- Try a bigger network will always help, others may not help but never hurt. Try them to get a best fitting on training set at least. Then look at variance.
+- If your algorithm has a high variance, look at dev performance:
+  - More data always help but may not possible.
+  - Try regularization to reduce overfitting.
   - Try a different model that is suitable for your data.
 - You should try the previous two points until you have a low bias and low variance.
-- In the older days before deep learning, there was a "Bias/variance tradeoff". But because now you have more options/tools for solving the bias and variance problem its really helpful to use deep learning.
-- Training a bigger neural network never hurts.
+- Being clear on how much of a bias problem or variance problem or both can help you focus on selecting the most useful things to try.
+- In the older days before deep learning, there was a "Bias/variance tradeoff", get a better variance may get a worse bias. But because now you have more options/tools for solving the bias and variance problem together, like getting more data pretty much always reduces your variance and doesn't hurt your bias much. This has been one of the big reasons that deep learning has been so useful for supervised learning
+- Training a bigger neural network never hurts. And the main cost of training a neural network that's too big is just computational time, so long as you're regularizing.
 
 ### Regularization
 
-- Adding regularization to NN will help it reduce variance (overfitting)
+- Adding regularization to NN will help it reduce variance (overfitting), there is a little bit of a bias variance tradeoff when you use regularization. It might increase the bias a little bit, although often not too much if you have a huge enough network.
 - L1 matrix norm:
   - `||W|| = Sum(|w[i,j]|)  # sum of absolute values of all w`
-- L2 matrix norm because of arcane technical math reasons is called Frobenius norm:
+- L2 matrix norm:
   - `||W||^2 = Sum(|w[i,j]|^2)	# sum of all w squared`
   - Also can be calculated as `||W||^2 = W.T * W if W is a vector`
 - Regularization for logistic regression:
   - The normal cost function that we want to minimize is: `J(w,b) = (1/m) * Sum(L(y(i),y'(i)))`
   - The L2 regularization version: `J(w,b) = (1/m) * Sum(L(y(i),y'(i))) + (lambda/2m) * Sum(|w[i]|^2)`
   - The L1 regularization version: `J(w,b) = (1/m) * Sum(L(y(i),y'(i))) + (lambda/2m) * Sum(|w[i]|)`
-  - The L1 regularization version makes a lot of w values become zeros, which makes the model size smaller.
+  - The L1 regularization version makes a lot of w values become zeros, which makes the model size smaller, but in practice this won't make too much difference.
   - L2 regularization is being used much more often.
-  - `lambda` here is the regularization parameter (hyperparameter)
+  - `lambda` here is the regularization parameter (a hyperparameter), in Python, `lambda` is a keyword, so we use `lambd` instead.
+  - we only add L2 norm w but not L2 norm b because b is only one parameter, but w is much higher dimension parameters. Add b won't make any difference.
 - Regularization for NN:
+  - Because of arcane technical math reasons the L2 Norm is called Frobenius norm
   - The normal cost function that we want to minimize is:   
     `J(W1,b1...,WL,bL) = (1/m) * Sum(L(y(i),y'(i)))`
 
@@ -166,7 +194,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
   - In practice this penalizes large weights and effectively limits the freedom in your model.
 
-  - The new term `(1 - (learning_rate*lambda)/m) * w[l]`  causes the **weight to decay** in proportion to its size.
+  - The new term `(1 - (learning_rate*lambda)/m) * w[l]`  causes the **weight to decay** in proportion to its size, so L2 regularization is also called weight decay.
 
 
 ### Why regularization reduces overfitting?
@@ -179,13 +207,13 @@ Here are some intuitions:
      - If `lambda` is too large, w's will be small (close to zero) - will use the linear part of the _tanh_ activation function, so we will go from non linear activation to _roughly_ linear which would make the NN a _roughly_ linear classifier.
      - If `lambda` good enough it will just make some of _tanh_ activations _roughly_ linear which will prevent overfitting.
      
-_**Implementation tip**_: if you implement gradient descent, one of the steps to debug gradient descent is to plot the cost function J as a function of the number of iterations of gradient descent and you want to see that the cost function J decreases **monotonically** after every elevation of gradient descent with regularization. If you plot the old definition of J (no regularization) then you might not see it decrease monotonically.
+_**Implementation tip**_: if you implement gradient descent, one of the steps to debug gradient descent is to plot the cost function J as a function of the number of iterations of gradient descent and you want to see that the cost function J decreases **monotonically** after every elevation of gradient descent with regularization. If you plot the old definition of J (no regularization) then you might not see it decrease monotonically, so remember J has added the regularization part.
 
 
 ### Dropout Regularization
 
 - In most cases Andrew Ng tells that he uses the L2 regularization.
-- The dropout regularization eliminates some neurons/weights on each iteration based on a probability.
+- The dropout regularization eliminates some neurons/weights on each iteration based on a probability, after dropout, the NN becomes a simpler NN.
 - A most common technique to implement dropout is called "Inverted dropout".
 - Code for Inverted dropout:
 
@@ -197,18 +225,18 @@ _**Implementation tip**_: if you implement gradient descent, one of the steps to
 
   a3 = np.multiply(a3,d3)   # keep only the values in d3
 
-  # increase a3 to not reduce the expected value of output
+  # increase a3 to not reduce the expected value of output z4
   # (ensures that the expected value of a3 remains the same) - to solve the scaling problem
-  a3 = a3 / keep_prob       
+  a3 = a3 / keep_prob (Inverted dropout technique, make test easier because of less scaling problem, even you don't use dropout)       
   ```
 - Vector d[l] is used for forward and back propagation and is the same for them, but it is different for each iteration (pass) or training example.
-- At test time we don't use dropout. If you implement dropout at test time - it would add noise to predictions.
+- At test time we don't use dropout. If you implement dropout at test time - it would add noise to predictions. We don't apply dropout and do not keep the 1/keep_prob in the calculations used in training.
 
 ### Understanding Dropout
 
 - In the previous video, the intuition was that dropout randomly knocks out units in your network. So it's as if on every iteration you're working with a smaller NN, and so using a smaller NN seems like it should have a regularizing effect.
 - Another intuition: can't rely on any one feature, so have to spread out weights.
-- It's possible to show that dropout has a similar effect to L2 regularization.
+- It's possible to show that dropout has a similar effect to L2 regularization by shrinking the w.
 - Dropout can have different `keep_prob` per layer.
 - The input layer dropout has to be near 1 (or 1 - no dropout) because you don't want to eliminate a lot of features.
 - If you're more worried about some layers overfitting than others, you can set a lower `keep_prob` for some layers than others. The downside is, this gives you even more hyperparameters to search for using cross-validation. One other alternative might be to have some layers where you apply dropout and some layers where you don't apply dropout and then just have one hyperparameter, which is a `keep_prob` for the layers for which you do apply dropouts.
@@ -225,13 +253,14 @@ _**Implementation tip**_: if you implement gradient descent, one of the steps to
   - For example in OCR, you can impose random rotations and distortions to digits/letters.
   - New data obtained using this technique isn't as good as the real independent data, but still can be used as a regularization technique.
 - **Early stopping**:
-  - In this technique we plot the training set and the dev set cost together for each iteration. At some iteration the dev set cost will stop decreasing and will start increasing.
+  - In this technique we plot the training set(blue line) and the dev set cost(purple line) together for each iteration. At some iteration the dev set cost will stop decreasing and will start increasing.
   - We will pick the point at which the training set error and dev set error are best (lowest training cost with lowest dev cost).
   - We will take these parameters as the best parameters.
     - ![](Images/02-_Early_stopping.png)
   - Andrew prefers to use L2 regularization instead of early stopping because this technique simultaneously tries to minimize the cost function and not to overfit which contradicts the orthogonalization approach (will be discussed further).
   - But its advantage is that you don't need to search a hyperparameter like in other regularization approaches (like `lambda` in L2 regularization).
-- **Model Ensembles**:
+  - In practical, trying to find the minimal of Cost function J and not to over fit it have different tools, but early stopping is trying to do it at the same time.
+- **Model Ensembles**: (not in the course)
   - Algorithm:
     - Train multiple independent models.
     - At test time average their results.
@@ -250,6 +279,7 @@ _**Implementation tip**_: if you implement gradient descent, one of the steps to
   4. Normalize the variance. `X /= variance`
 - These steps should be applied to training, dev, and testing sets (but using mean and variance of the train set).
 - Why normalize?
+  - If the parameters come from different scale, like w1 1-2000, w2 -1 to 1, the normalization speed up a lot.
   - If we don't normalize the inputs our cost function will be deep and its shape will be inconsistent (elongated) then optimizing it will take a long time.
   - But if we normalize it the opposite will occur. The shape of the cost function will be consistent (look more symmetric like circle in 2D example) and we can use a larger learning rate alpha - the optimization will be faster.
 
@@ -305,13 +335,17 @@ _**Implementation tip**_: if you implement gradient descent, one of the steps to
 
 ### Numerical approximation of gradients
 
-- There is an technique called gradient checking which tells you if your implementation of backpropagation is correct.
+- There is a technique called gradient checking which tells you if your implementation of backpropagation is correct.
 - There's a numerical way to calculate the derivative:   
   ![](Images/03-_Numerical_approximation_of_gradients.png)
 - Gradient checking approximates the gradients and is very helpful for finding the errors in your backpropagation implementation but it's slower than gradient descent (so use only for debugging).
+- There are two methods to do the gradient approximates 
+`d_theta_approx[i] = (J(theta1,...,theta[i] + eps) -  J(theta1,...,theta[i] - eps)) / 2*eps` is better than 
+
+  `d_theta_approx[i] = （J(theta1,...,theta[i]  + eps) - J(theta1,...,theta[i]) )/ eps`
 - Implementation of this is very simple.
 - Gradient checking:
-  - First take `W[1],b[1],...,W[L],b[L]` and reshape into one big vector (`theta`)
+  - First take all parameters like `W[1],b[1],...,W[L],b[L]` and reshape into one big vector (`theta`)
   - The cost function will be `J(theta)`
   - Then take `dW[1],db[1],...,dW[L],db[L]` into one big vector (`d_theta`)
   - **Algorithm**:   
@@ -329,11 +363,11 @@ _**Implementation tip**_: if you implement gradient descent, one of the steps to
 
 - Don't use the gradient checking algorithm at training time because it's very slow.
 - Use gradient checking only for debugging.
-- If algorithm fails grad check, look at components to try to identify the bug.
+- If algorithm fails grad check, look at components to try to identify the bug, which means try to find if the problem is during computing w or b.
 - Don't forget to add `lamda/(2m) * sum(W[l])` to `J` if you are using L1 or L2 regularization.
 - Gradient checking doesn't work with dropout because J is not consistent. 
   - You can first turn off dropout (set `keep_prob = 1.0`), run gradient checking and then turn on dropout again.
-- Run gradient checking at random initialization and train the network for a while maybe there's a bug which can be seen when w's and b's become larger (further from 0) and can't be seen on the first iteration (when w's and b's are very small).
+- Run gradient checking at random initialization and train the network for a while and run gradient checking again, because maybe there's a bug which can be seen when w's and b's become larger (further from 0) and can't be seen on the first iteration (when w's and b's are very small).
 
 ### Initialization summary
 
@@ -374,12 +408,16 @@ Implications of L2-regularization on:
 - You only use dropout during training. Don't use dropout (randomly eliminate nodes) during test time.
 - Apply dropout both during forward and backward propagation.
 - During training time, divide each dropout layer by keep_prob to keep the same expected value for the activations. For example, if `keep_prob` is 0.5, then we will on average shut down half the nodes, so the output will be scaled by 0.5 since only the remaining half are contributing to the solution. Dividing by 0.5 is equivalent to multiplying by 2. Hence, the output now has the same expected value. You can check that this works even when keep_prob is other values than 0.5.
+- Increasing the parameter keep_prob from (say) 0.5 to 0.6 will likely cause: 
+  - reducing the regularization effect
+  - causing the NN to end up with a lower training set error.
 
 
 ## Optimization algorithms
 
 ### Mini-batch gradient descent
 
+- Optimization means you can train your models faster. 
 - Training NN with a large data is slow. So to find an optimization algorithm that runs faster is a good idea.
 - Suppose we have `m = 50 million`. To train this data it will take a huge processing time for one step.
   - because 50 million won't fit in the memory at once we need other processing to make such a thing.
@@ -406,7 +444,7 @@ Implications of L2-regularization on:
 
 ### Understanding mini-batch gradient descent
 
-- In mini-batch algorithm, the cost won't go down with each step as it does in batch algorithm. It could contain some ups and downs but generally it has to go down (unlike the batch gradient descent where cost function descreases on each iteration).
+- In mini-batch algorithm, the cost won't go down with each step as it does in batch algorithm. It could contain some ups and downs but generally it has to go down (unlike the batch gradient descent where cost function decreases on each iteration).
   ![](Images/04-_batch_vs_mini_batch_cost.png)
 - Mini-batch size:
   - (`mini batch size = m`)  ==>    Batch gradient descent
@@ -422,7 +460,7 @@ Implications of L2-regularization on:
   1. faster learning:
       - you have the vectorization advantage
       - make progress without waiting to process the entire training set
-  2. doesn't always exactly converge (oscelates in a very small region, but you can reduce learning rate)
+  2. doesn't always exactly converge (oscillates in a very small region, but you can reduce learning rate)
 - Guidelines for choosing mini-batch size:
   1. If small training set (< 2000 examples) - use batch gradient descent.
   2. It has to be a power of 2 (because of the way computer memory is layed out and accessed, sometimes your code runs faster if your mini-batch size is a power of 2):
@@ -489,6 +527,7 @@ Implications of L2-regularization on:
   v(t) = (beta * v(t-1) + (1-beta) * theta(t)) / (1 - beta^t)
   ```
 - As t becomes larger the `(1 - beta^t)` becomes close to `1`
+- Some people won't bother to use bias correction but just wait for the initial phase pass
 
 ### Gradient descent with momentum
 
@@ -526,7 +565,7 @@ Implications of L2-regularization on:
   	W = W - learning_rate * dW / sqrt(sdW)
   	b = B - learning_rate * db / sqrt(sdb)
   ```
-- RMSprop will make the cost function move slower on the vertical direction and faster on the horizontal direction in the following example:
+- RMSprop will make the cost function move slower on the vertical direction and faster on the horizontal direction in the following example: (actually in practice, w and b are both high dimensional parameter, so w1,w2,w3 can be horizontal direction and w4,w5,w6 can b vertical direction)
     ![](Images/06-_RMSprop.png)
 - Ensure that `sdW` is not zero by adding a small value `epsilon` (e.g. `epsilon = 10^-8`) to it:   
    `W = W - learning_rate * dW / (sqrt(sdW) + epsilon)`
@@ -607,8 +646,8 @@ Implications of L2-regularization on:
   8. Activation functions.
   9. Adam `beta1`, `beta2` & `epsilon`.
 - Its hard to decide which hyperparameter is the most important in a problem. It depends a lot on your problem.
-- One of the ways to tune is to sample a grid with `N` hyperparameter settings and then try all settings combinations on your problem.
-- Try random values: don't use a grid.
+- In old machine learning, one of the ways to tune is to sample a grid with `N` hyperparameter settings and then try all settings combinations on your problem.
+- But in deep learning, try random values: don't use a grid.
 - You can use `Coarse to fine sampling scheme`:
   - When you find some hyperparameters values that give you a better performance - zoom into a smaller region around these values and sample more densely within this space.
 - These methods can be automated.
@@ -638,7 +677,8 @@ Implications of L2-regularization on:
 ### Hyperparameters tuning in practice: Pandas vs. Caviar 
 
 - Intuitions about hyperparameter settings from one application area may or may not transfer to a different one.
-- If you don't have much computational resources you can use the "babysitting model":
+- You should check the performance of your hyperparameter every few months since the computational resource changes.
+- If you don't have much computational resources you can use the "babysitting one model":
   - Day 0 you might initialize your parameter as random and then start training.
   - Then you watch your learning curve gradually decrease over the day.
   - And each day you nudge your parameters a little during training.
@@ -650,7 +690,7 @@ Implications of L2-regularization on:
 
 - In the rise of deep learning, one of the most important ideas has been an algorithm called **batch normalization**, created by two researchers, Sergey Ioffe and Christian Szegedy.
 - Batch Normalization speeds up learning.
-- Before we normalized input by subtracting the mean and dividing by variance. This helped a lot for the shape of the cost function and for reaching the minimum point faster.
+- Before we normalized input layer by subtracting the mean and dividing by variance. This helped a lot for the shape of the cost function and for reaching the minimum point faster.
 - The question is: *for any hidden layer can we normalize `A[l]` to train `W[l+1]`, `b[l+1]` faster?* This is what batch normalization is about.
 - There are some debates in the deep learning literature about whether you should normalize values before the activation function `Z[l]` or after applying the activation function `A[l]`. In practice, normalizing `Z[l]` is done much more often and that is what Andrew Ng presents.
 - Algorithm:
@@ -672,8 +712,9 @@ Implications of L2-regularization on:
 - Our NN parameters will be:
   - `W[1]`, `b[1]`, ..., `W[L]`, `b[L]`, `beta[1]`, `gamma[1]`, ..., `beta[L]`, `gamma[L]`
   - `beta[1]`, `gamma[1]`, ..., `beta[L]`, `gamma[L]` are updated using any optimization algorithms (like GD, RMSprop, Adam)
+  - beta are used in batch norm and Adam, but they are different parameters.
 - If you are using a deep learning framework, you won't have to implement batch norm yourself:
-  - Ex. in Tensorflow you can add this line: `tf.nn.batch-normalization()`
+  - Ex. in Tensorflow you can add this line: `tf.nn.batch_normalization()`
 - Batch normalization is usually applied with mini-batches.
 - If we are using batch normalization parameters `b[1]`, ..., `b[L]` doesn't count because they will be eliminated after mean subtraction step, so:
   ```
@@ -692,7 +733,7 @@ Implications of L2-regularization on:
 ### Why does Batch normalization work?
 
 - The first reason is the same reason as why we normalize X.
-- The second reason is that batch normalization reduces the problem of input values changing (shifting).
+- The second reason is that batch normalization reduces the problem of input values changing (covariate shifting, for example, train the model with black cats, but test the model with colored cats). No matter how input layer or previously hidden layer changes, with normalization, they will be more stable. 
 - Batch normalization does some regularization:
   - Each mini batch is scaled by the mean/variance computed of that mini-batch.
   - This adds some noise to the values `Z[l]` within that mini batch. So similar to dropout it adds some noise to each hidden layer's activations.
@@ -734,6 +775,7 @@ Implications of L2-regularization on:
   t = e^(Z[L])                      # shape(C, m)
   A[L] = e^(Z[L]) / sum(t)          # shape(C, m), sum(t) - sum of t's for each example (shape (1, m))
   ```
+- A[L] is probability of C classes.
 
 ### Training a Softmax classifier
 
@@ -780,7 +822,7 @@ Implications of L2-regularization on:
 - How to choose deep learning framework:
   - Ease of programming (development and deployment)
   - Running speed
-  - Truly open (open source with good governance)
+  - Truly open (open source with good governance, over years, what was open sourced may be closed by some companies)
 - Programming frameworks can not only shorten your coding time but sometimes also perform optimizations that speed up your code.
 
 ### TensorFlow
@@ -789,30 +831,25 @@ Implications of L2-regularization on:
 - Lets see how to implement a minimization function:
   - Example function: `J(w) = w^2 - 10w + 25`
   - The result should be `w = 5` as the function is `(w-5)^2 = 0`
-  - Code v.1:
-    ```python
-    import numpy as np
+- Code v.1:
+  ```python
+  import numpy as np
     import tensorflow as tf
-    
-    
     w = tf.Variable(0, dtype=tf.float32)                 # creating a variable w
     cost = tf.add(tf.add(w**2, tf.multiply(-10.0, w)), 25.0)        # can be written as this - cost = w**2 - 10*w + 25
     train = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
-
     init = tf.global_variables_initializer()
     session = tf.Session()
     session.run(init)
     session.run(w)    # Runs the definition of w, if you print this it will print zero
     session.run(train)
-
     print("W after one iteration:", session.run(w))
-
     for i in range(1000):
     	session.run(train)
-
     print("W after 1000 iterations:", session.run(w))
     ```
-  - Code v.2 (we feed the inputs to the algorithm through coefficients):
+    
+- Code v.2 (we feed the inputs to the algorithm through coefficients):
 
     ```python
     import numpy as np
@@ -840,16 +877,17 @@ Implications of L2-regularization on:
 
     print("W after 1000 iterations:", session.run(w))
     ```
-- In TensorFlow you implement only the forward propagation and TensorFlow will do the backpropagation by itself.
+- In TensorFlow you implement only the forward propagation and TensorFlow will do the backpropagation by itself. In tensorflow documentation, the computation draft use only 
 - In TensorFlow a placeholder is a variable you can assign a value to later.
 - If you are using a mini-batch training you should change the `feed_dict={x: coefficients}` to the current mini-batch data.
 - Almost all TensorFlow programs use this:
   ```python
   with tf.Session() as session:       # better for cleaning up in case of error/exception
-  	session.run(init)
-  	session.run(w)
+  	   session.run(init)
+  	   session.run(w)
   ```
 - In deep learning frameworks there are a lot of things that you can do with one line of code like changing the optimizer.
+
 _**Side notes:**_
 - Writing and running programs in TensorFlow has the following steps:
   1. Create Tensors (variables) that are not yet executed/evaluated.
@@ -867,6 +905,11 @@ _**Side notes:**_
   ```
 - For 3-layer NN, it is important to note that the forward propagation stops at `Z3`. The reason is that in TensorFlow the last linear layer output is given as input to the function computing the loss. Therefore, you don't need `A3`!
 - To reset the graph use `tf.reset_default_graph()`
+- One hot encodings is used for multi-class classification. 
+```
+tf.ont_hot(labels, depth, axis)
+```
+
 
 ## Extra Notes
 
@@ -888,3 +931,7 @@ _**Side notes:**_
 <br><br>
 <br><br>
 These Notes were made by [Mahmoud Badry](mailto:mma18@fayoum.edu.eg) @2017
+Modified by [Xiao Wang](mailto:shawnwong.ai@gmail.com) @2020
+
+Finally I got the certification for Lecture two.
+![](Images/cert.png)
