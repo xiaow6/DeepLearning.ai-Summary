@@ -7,6 +7,7 @@ This is the third course of the deep learning specialization at [Coursera](https
 * [Structuring Machine Learning Projects](#structuring-machine-learning-projects)
    * [Table of contents](#table-of-contents)
    * [Course summary](#course-summary)
+   * [Key Point](#key-point)
    * [ML Strategy 1](#ml-strategy-1)
       * [Why ML Strategy](#why-ml-strategy)
       * [Orthogonalization](#orthogonalization)
@@ -51,6 +52,18 @@ Here are the course summary as its given on the course [link](https://www.course
 > This is a standalone course, and you can take this so long as you have basic machine learning knowledge. This is the third course in the Deep Learning Specialization.
 
 
+## Key Point
+### Week 1
+* Understand why Machine Learning strategy is important
+* Apply satisficing and optimizing metrics to set up your goal for ML projects
+* Choose a correct train/dev/test split of your dataset
+* Understand how to define human-level performance
+* Use human-level perform to define your key priorities in ML projects
+* Take the correct ML Strategic decision based on observations of performances and dataset
+
+### Week 2
+* Understand what multi-task learning and transfer learning are
+* Recognize bias, variance and data-mismatch by looking at the performances of your algorithm on train/dev/test sets
 
 ## ML Strategy 1
 
@@ -66,11 +79,11 @@ Here are the course summary as its given on the course [link](https://www.course
   - Try dropout.
   - Add L2 regularization.
   - Change network architecture (activation functions, # of hidden units, etc.)
-- This course will give you some strategies to help analyze your problem to go in a direction that will help you get better results.
+- This course will give you some strategies to help analyze your problem to go in a direction that will help you get better results in case you waste half a year on a wrong road.
 
 ### Orthogonalization
 
-- Some deep learning developers know exactly what hyperparameter to tune in order to try to achieve one effect. This is a process we call orthogonalization.
+- There are so many things you can try and so many hyperparameter you can tune. But some deep learning developers know exactly what hyperparameter to tune in order to try to achieve one effect. This is a process we call orthogonalization.
 - In orthogonalization, you have some controls, but each control does a specific task and doesn't affect other controls.
 - For a supervised learning system to do well, you usually need to tune the knobs of your system to make sure that four things hold true - chain of assumptions in machine learning:
   1. You'll have to fit training set well on cost function (near human level performance if possible).
@@ -81,10 +94,11 @@ Here are the course summary as its given on the course [link](https://www.course
      - If its not achieved you could try bigger dev. set...
   4. Performs well in real world.
      - If its not achieved you could try change dev. set, change cost function...
+- Andrew don't recommend early stopping, it's not a bad technique, but it doesn't have the orthogonalization effect like the above techniques, as it may affect the train and dev process.
 
 ### Single number evaluation metric
 
-- Its better and faster to set a single number evaluation metric for your project before you start it.
+- Its better and faster to set a single real number evaluation metric for your project before you start it.
 - Difference between precision and recall (in cat classification example):
   - Suppose we run the classifier on 10 images which are 5 cats and 5 non-cats. The classifier identifies that there are 4 cats, but it identified 1 wrong cat.
   - Confusion matrix:
@@ -93,29 +107,30 @@ Here are the course summary as its given on the course [link](https://www.course
       | -------------- | -------------- | ----------------- |
       | Actual cat     | 3              | 2                 |
       | Actual non-cat | 1              | 4                 |
-  - **Precision**: percentage of true cats in the recognized result: P = 3/(3 + 1) 
+  - **Precision**: percentage of true cats in the predicted cat result: P = 3/(3 + 1) 
   - **Recall**: percentage of true recognition cat of the all cat predictions: R = 3/(3 + 2)
-  - **Accuracy**: (3+4)/10
-- Using a precision/recall for evaluation is good in a lot of cases, but separately they don't tell you which algothims is better. Ex:
+  - **Accuracy**: Corrected predicted cat and non-cat in the whole set: (3+4)/10
+- Using a precision/recall for evaluation is good in a lot of cases, but separately they don't tell you which algorithm is better, you always need to do tradeoff between precision and recall. Ex: A is better at recall but B is better at precision.
 
   | Classifier | Precision | Recall |
   | ---------- | --------- | ------ |
   | A          | 95%       | 90%    |
   | B          | 98%       | 85%    |
-- A better thing is to combine precision and recall in one single (real) number evaluation metric. There a metric called `F1` score, which combines them
+- So only by using two numbers, you can't evaluate the classifier performance easily. A better thing is to combine precision and recall in one single (real) number evaluation metric. There is a metric called `F1` score, which combines them
   - You can think of `F1` score as an average of precision and recall
-    `F1 = 2 / ((1/P) + (1/R))`
-
+    `F1 = 2 / ((1/P) + (1/R))`, called **Harmonic Mean of precision P and recall R.**
+- A well-defined Dev set plus a Single row number evaluation metric allows you to quickly tell which classifier is better.     
+- 
 ### Satisfying and Optimizing metric
 
-- Its hard sometimes to get a single number evaluation metric. Ex:
+- It‘s hard sometimes to get a single number evaluation metric. Ex:
 
   | Classifier | F1   | Running time |
   | ---------- | ---- | ------------ |
   | A          | 90%  | 80 ms        |
   | B          | 92%  | 95 ms        |
   | C          | 92%  | 1,500 ms     |
-- So we can solve that by choosing a single optimizing metric and decide that other metrics are satisfying. Ex:
+- So we can solve that by choosing a single optimizing metric(want best) and decide that other metrics are satisfying（good enough）. Ex:
   ```
   Maximize F1                     # optimizing metric
   subject to running time < 100ms # satisficing metric
@@ -125,18 +140,29 @@ Here are the course summary as its given on the course [link](https://www.course
   Maximize 1     # optimizing metric (one optimizing metric)
   subject to N-1 # satisficing metric (N-1 satisficing metrics)
   ```
+- One more case is wake word detection:
+  ```
+  Maximize accuracy
+  subject to 3 false detections in 24hrs.
+  ```
+  
 
 ### Train/dev/test distributions
 
 - Dev and test sets have to come from the same distribution.
-- Choose dev set and test set to reflect data you expect to get in the future and consider important to do well on.
-- Setting up the dev set, as well as the validation metric is really defining what target you want to aim at.
+- Shuffle all data randomly and distribute them into dev and test sets.
+- Some team works on optimizing dev set target for a long time but test it on another target, that will waste much time.
+- Guideline: Choose dev set and test set to reflect data you expect to get in the future and consider important to do well on. 
+- Setting up the dev set, as well as the evaluation metric is really defining what target you want to aim at.
+- Training set will define how well you will hit the aiming target.
 
 ### Size of the dev and test sets
 
 - An old way of splitting the data was 70% training, 30% test or 60% training, 20% dev, 20% test. 
 - The old way was valid for a number of examples ~ <100000 
 - In the modern deep learning if you have a million or more examples a reasonable split would be 98% training, 1% dev, 1% test. 
+- Size of test set: set your test set to be big enough to give high confidence in the overall performance of your system.
+- Sometimes, split data to only train and dev set, use dev set as test set.
 
 ### When to change dev/test sets and metrics
 
@@ -155,12 +181,13 @@ Here are the course summary as its given on the course [link](https://www.course
        - `w[i] = 1                   if x[i] is not porn`
        - `w[i] = 10                 if x[i] is porn`
 
+- Don't stick on the unsatisfying metrics but instead to find another better metrics.
 - This is actually an example of an orthogonalization where you should take a machine learning problem and break it into distinct steps: 
 
   1. Figure out how to define a metric that captures what you want to do - place the target. 
   2. Worry about how to actually do well on this metric - how to aim/shoot accurately at the target.
 
-- Conclusion: if doing well on your metric + dev/test set doesn't correspond to doing well in your application, change your metric and/or dev/test set.
+- Conclusion: if doing well on your metric + dev/test set doesn't correspond to doing well in your application, change your metric and/or dev/test set. Never run too long on dev set without evaluation metrics.
 
 ### Why human-level performance?
 
@@ -169,24 +196,26 @@ Here are the course summary as its given on the course [link](https://www.course
   2. It turns out that the workflow of designing and building a machine learning system is much more efficient when you're trying to do something that humans can also do.
 - After an algorithm reaches the human level performance the progress and accuracy slow down.
     ![01- Why human-level performance](Images/01-_Why_human-level_performance.png)
-- You won't surpass an error that's called "Bayes optimal error".
-- There isn't much error range between human-level error and Bayes optimal error.
-- Humans are quite good at a lot of tasks. So as long as Machine learning is worse than humans, you can:
+- But the performance won't surpass the limit that's called "Bayes optimal error". AKA best possible error.
+- It slows down because for some tasks, there isn't much error range between human-level error and Bayes optimal error.
+- Why compare to human-level performance:
+Humans are quite good at a lot of tasks. So as long as Machine learning is worse than humans, you can:
   - Get labeled data from humans.
   - Gain insight from manual error analysis: why did a person get it right?
   - Better analysis of bias/variance.
 
 ### Avoidable bias
 
+- We want our algorithm do well on some tasks but we don't want it do too well.
 - Suppose that the cat classification algorithm gives these results:
 
   | Humans             | 1%   | 7.5% |
   | ------------------ | ---- | ---- |
   | **Training error** | 8%   | 8%   |
   | **Dev Error**      | 10%  | 10%  |
-  - In the left example, because the human level error is 1% then we have to focus on the **bias**.
+  - In the left example, because the human level error is 1% then we have to focus on the **bias**. We need to try a bigger training set or train it longer. 
   - In the right example, because the human level error is 7.5% then we have to focus on the **variance**.
-  - The human-level error as a proxy (estimate) for Bayes optimal error. Bayes optimal error is always less (better), but human-level in most cases is not far from it.
+  - The human-level error as a proxy (estimate) for Bayes optimal error. Bayes optimal error is always less (better), but human-level in most cases is not far from it, especially in computer vision.
   - You can't do better than Bayes error unless you are overfitting.
   - `Avoidable bias = Training error - Human (Bayes) error`
   - `Variance = Dev error - Training error`
@@ -212,13 +241,15 @@ Here are the course summary as its given on the course [link](https://www.course
 - In some problems, deep learning has surpassed human-level performance. Like:
   - Online advertising.
   - Product recommendation.
+  - Logistics
   - Loan approval.
-- The last examples are not natural perception task, rather learning on structural data. Humans are far better in natural perception tasks like computer vision and speech recognition.
+- The last examples are not natural perception task, rather learning on structural data, and the team can access to huge data. Humans are far better in natural perception tasks like computer vision and speech recognition and medical.
+- Once your training error surpass the human performance threshold, the way to improve your algorithm is less clear. You can't rely on human performance to decide which direction you should improve the performance.
 - It's harder for machines to surpass human-level performance in natural perception task. But there are already some systems that achieved it.
 
 ### Improving your model performance
 
-- The two fundamental asssumptions of supervised learning:
+- The two fundamental assumptions of supervised learning:
   1. You can fit the training set pretty well. This is roughly saying that you can achieve low **avoidable bias**. 
   2. The training set performance generalizes pretty well to the dev/test set. This is roughly saying that **variance** is not too bad.
 - To improve your deep learning supervised system follow these guidelines:
@@ -227,6 +258,7 @@ Here are the course summary as its given on the course [link](https://www.course
   3. If **avoidable bias** is large you have these options:
      - Train bigger model.
      - Train longer/better optimization algorithm (like Momentum, RMSprop, Adam).
+     - Try decreasing regularization.
      - Find better NN architecture/hyperparameters search.
   4. If **variance** is large you have these options:
      - Get more training data.
@@ -239,6 +271,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Carrying out error analysis
 
+- If your algorithm performance is far from human performance, you should try error analysis.
 - Error analysis - process of manually examining mistakes that your algorithm is making. It can give you insights into what to do next. E.g.:
   - In the cat classification example, if you have 10% error on your dev set and you want to decrease the error.
   - You discovered that some of the mislabeled data are dog pictures that look like cats. Should you try to make your cat classifier do better on dogs (this could take some weeks)?
@@ -263,8 +296,8 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Cleaning up incorrectly labeled data
 
-- DL algorithms are quite robust to random errors in the training set but less robust to systematic errors. But it's OK to go and fix these labels if you can.
-- If you want to check for mislabeled data in dev/test set, you should also try error analysis with the mislabeled column. Ex:
+- DL algorithms are quite robust to random errors in the training set but less robust to systematic errors（recognize white dogs as cats）. But it's OK to go and fix these labels if you can. If the training set is huge usually you don't need to fix the mislabeled training set.
+- If you want to check for mislabeled data in dev/test set, you should also try error analysis with the incorrectly labeled column. Ex:
 
   | Image        | Dog    | Great Cats | blurry  | Mislabeled | Comments |
   | ------------ | ------ | ---------- | ------- | ---------- | -------- |
@@ -287,18 +320,20 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Build your first system quickly, then iterate
 
+- Andrew worked on speech recognition for many years, and there are many directions to optimizing the algorithm.
 - The steps you take to make your deep learning project:
-  - Setup dev/test set and metric
-  - Build initial system quickly
+  - Setup dev/test set and metric（Set a target, if not right, you can change it later）
+  - Build initial system quickly(But be able to do error analysis for different directions)
   - Use Bias/Variance analysis & Error analysis to prioritize next steps.
+- By building your first system quickly, then iterate, you can avoid overthinking and build something too complicated or underthinking and build something too simple.
 
 ### Training and testing on different distributions
 
 - A lot of teams are working with deep learning applications that have training sets that are different from the dev/test sets due to the hunger of deep learning to data.
 - There are some strategies to follow up when training set distribution differs from dev/test sets distribution.
-  - Option one (not recommended): shuffle all the data together and extract randomly training and dev/test sets.
+  - Option one (not recommended): shuffle all the data together and shuffled randomly training and dev/test sets.
     - Advantages: all the sets now come from the same distribution.
-    - Disadvantages: the other (real world) distribution that was in the dev/test sets will occur less in the new dev/test sets and that might be not what you want to achieve.
+    - HUGE Disadvantages: most pictures are come from internet, the other (real world) distribution that was in the dev/test sets will occur less in the new dev/test sets and that might be not what you want to achieve.
   - Option two: take some of the dev/test set examples and add them to the training set.
     - Advantages: the distribution you care about is your target now.
     - Disadvantage: the distributions in training and dev/test sets are now different. But you will get a better performance over a long time.
@@ -336,7 +371,8 @@ Here are the course summary as its given on the course [link](https://www.course
      - If difference is much bigger then train-dev error its **Data mismatch** problem.
   5. Test error
      - Calculate `degree of overfitting to dev set = test error - dev error`
-     - Is the difference is big (positive) then maybe you need to find a bigger dev set (dev set and test set come from the same distribution, so the only way for there to be a huge gap here, for it to do much better on the dev set than the test set, is if you somehow managed to overfit the dev set).
+     - If the difference is big (positive) then maybe you need to find a bigger dev set (dev set and test set come from the same distribution, so the only way for there to be a huge gap here, for it to do much better on the dev set than the test set, is if you somehow managed to overfit the dev set).
+  6. However, sometimes the numbers are not just go up, sometimes it performs bad on train-dev, but performs good on dev set. Draw the picture in slides can help you get some insights of how to improve your algorithm.
 - Unfortunately, there aren't many systematic ways to deal with data mismatch. There are some things to try about this in the next section.
 
 ### Addressing data mismatch
@@ -353,7 +389,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Transfer learning
 
-- Apply the knowledge you took in a task A and apply it in another task B.
+- Transfer learning: Apply the knowledge you took in a task A and apply it in another task B.
 - For example, you have trained a cat classifier with a lot of data, you can use the part of the trained NN it to solve x-ray classification problem.
 - To do transfer learning, delete the last layer of NN and it's weights and:
   1. Option 1: if you have a small data set - keep all the other weights as a fixed weights. Add a new last layer(-s) and initialize the new layer weights and feed the new data to the NN and learn the new weights.
@@ -361,7 +397,7 @@ Here are the course summary as its given on the course [link](https://www.course
 - Option 1 and 2 are called **fine-tuning** and training on task A called **pretraining**.
 - When transfer learning make sense:
   - Task A and B have the same input X (e.g. image, audio).
-  - You have a lot of data for the task A you are transferring from and relatively less data for the task B your transferring to.
+  - You have a lot more data for the task A you are transferring from and relatively less data for the task B your transferring to.
   - Low level features from task A could be helpful for learning task B.
 
 ### Multi-task learning
@@ -374,6 +410,7 @@ Here are the course summary as its given on the course [link](https://www.course
   `Cost = (1/m) * sum(sum(L(y_hat(i)_j, y(i)_j))), i = 1..m, j = 1..4`, where   
   `L = - y(i)_j * log(y_hat(i)_j) - (1 - y(i)_j) * log(1 - y_hat(i)_j)`
 - In the last example you could have trained 4 neural networks separately but if some of the earlier features in neural network can be shared between these different types of objects, then you find that training one neural network to do four things results in better performance than training 4 completely separate neural networks to do the four tasks separately. 
+- Multi-task learning is different from softmax classification, as softmax can only recognize one result from 4(or more) classes, but multi-task can output 4 classes together.
 - Multi-task learning will also work if y isn't complete for some labels. For example:
   ```
   Y = [1 ? 1 ...]
@@ -386,8 +423,8 @@ Here are the course summary as its given on the course [link](https://www.course
   1. Training on a set of tasks that could benefit from having shared lower-level features.
   2. Usually, amount of data you have for each task is quite similar.
   3. Can train a big enough network to do well on all the tasks.
-- If you can train a big enough NN, the performance of the multi-task learning compared to splitting the tasks is better.
-- Today transfer learning is used more often than multi-task learning.
+- If you can train a big enough NN, the performance of the multi-task learning compared to splitting the tasks is better. The only reason multi-task hurts the performance is you don't have a big enough NN.
+- Today transfer learning is used more often than multi-task learning. Objects detection is more often using multi-task learning.
 
 ### What is end-to-end deep learning?
 
@@ -408,7 +445,7 @@ Here are the course summary as its given on the course [link](https://www.course
     ```
   - In practice, the best approach is the second one for now.
   - In the second implementation, it's a two steps approach where both parts are implemented using deep learning.
-  - Its working well because it's harder to get a lot of pictures with people in front of the camera than getting faces of people and compare them.
+  - It’s working well because it's harder to get a lot of pictures with people in front of the camera than getting faces of people and compare them.
   - In the second implementation at the last step, the NN takes two faces as an input and outputs if the two faces are the same person or not.
 - Example 3:
   - Machine translation system:
@@ -438,6 +475,28 @@ Here are the course summary as its given on the course [link](https://www.course
   - Use ML/DL to learn some individual components.
   - When applying supervised learning you should carefully choose what types of X to Y mappings you want to learn depending on what task you can get data for.
 
+### Interviews
+- Andrej Karpathy: Timeline from [his website](https://cs.stanford.edu/people/karpathy/)
+
+Timeline.
+* 2017-now: Sr. Director of AI at Tesla (article) Neural Networks for the Autopilot
+* 2016-2017: Research Scientist at OpenAI Deep Learning, Generative Models, Reinforcement Learning
+* Summer 2015: DeepMind Internship Deep Reinforcement Learning group
+* Summer 2013: Google Research Internship Large-Scale Supervised Deep Learning for Videos
+* 2011-2015: Stanford Computer Science Ph.D. student Deep Learning, Computer Vision, Natural Language Processing. Adviser: Fei-Fei Li.
+* Summer 2011: Google Research Internship Large-Scale Unsupervised Deep Learning for Videos
+* 2009-2011: University of British Columbia: MSc Learning Controllers for Physically-simulated Figures. Adviser: Michiel van de Panne
+* 2005-2009: University of Toronto: BSc Double major in Computer Science and Physics
+
+He designed and was the primary instructor for a new Stanford class on Convolutional Neural Networks for Visual Recognition (CS231n). 
+
+- Ruslan Salakhutdinov 
+- Professor of f Computer Science in the Machine Learning Department, School of Computer Science at Carnegie Mellon University. 
+- Worked in Apple.Inc.
+
+
+- Both of them advise that we should understand the basic of the NN, and try new things and don't use framework like tensorflow before you implement the code by yourself. Like implement Backprop of CNN. 
+
 
 
 
@@ -447,3 +506,7 @@ Here are the course summary as its given on the course [link](https://www.course
 <br><br>
 <br><br>
 These Notes were made by [Mahmoud Badry](mailto:mma18@fayoum.edu.eg) @2017
+Modified by [Xiao Wang](mailto:shawnwong.ai@gmail.com) @2020
+
+Finally I got the certification for Lecture Three.
+![](Images/cert.png)
